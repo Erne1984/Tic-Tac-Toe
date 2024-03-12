@@ -17,7 +17,7 @@ main {
 .label-box{
     display: flex;
     justify-content: space-around;
-    width: 80%;
+    width: 70%;
 }
 
 .symbols {
@@ -56,4 +56,17 @@ main {
 .btn-retry img{
     background-color: #808080;
     max-height: 90%;
+}
+
+.board{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(100px, 1fr));
+    gap: 5px;
+    width: 70%;
+}
+
+.square{
+    height: 50px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color: #1f3540;
 }
