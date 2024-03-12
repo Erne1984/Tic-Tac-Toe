@@ -3,7 +3,7 @@
     padding: 0;
     margin: 0;
     font-family: "Poppins", sans-serif;
-    background-color: #121212;
+    background-color: #192a32;
     color: #fff;
 }
 
@@ -60,13 +60,21 @@ main {
 
 .board{
     display: grid;
-    grid-template-columns: repeat(3, minmax(100px, 1fr));
-    gap: 5px;
+    grid-template-columns: repeat(3, 130px);
+    justify-content: center;
+    gap: 10px;
     width: 70%;
 }
 
-.square{
-    height: 50px;
+.square {
+    width: 100%; 
+    padding-top: 100%; 
+    border-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     background-color: #1f3540;
+    cursor: pointer;
+}
+
+.square:hover{
+    opacity: 0.8;
 }
