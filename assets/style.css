@@ -11,41 +11,55 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 35px;
+    gap: 20px;
 }
 
-.label-box{
+.label-top {
     display: flex;
-    justify-content: space-around;
-    width: 70%;
+    justify-content: space-evenly;
+    width: 50%;
 }
 
 .symbols {
     display: flex;
 }
 
-.x-icon{
+.x-icon {
     font-size: 2rem;
     font-weight: bold;
     color: #48ebe2;
 }
 
-.o-icon{
+.o-icon {
     font-size: 2rem;
     font-weight: bold;
     color: #ddad34;
 }
 
-.turn{
+.turn {
     display: flex;
     align-items: center;
+    background-color: #1f3540;
+    padding: 5px;
+    border-radius: 5px;
+    gap: 5px;
 }
 
-.btn-retry{
+.turn>.x-icon {
+    background-color: #1f3540;
+    font-size: 1.3rem;
+}
+
+.turn>div {
+    background-color: #1f3540;
+    font-size: 0.9rem;
+}
+
+.btn-retry {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #808080;
+    background-color: #a8bec9;
     padding: 5px;
     height: 48px;
     cursor: pointer;
@@ -53,12 +67,12 @@ main {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.btn-retry img{
-    background-color: #808080;
+.btn-retry img {
+    background-color: #a8bec9;
     max-height: 90%;
 }
 
-.board{
+.board {
     display: grid;
     grid-template-columns: repeat(3, 130px);
     justify-content: center;
@@ -67,14 +81,49 @@ main {
 }
 
 .square {
-    width: 100%; 
-    padding-top: 100%; 
+    width: 100%;
+    padding-top: 100%;
     border-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     background-color: #1f3540;
     cursor: pointer;
 }
 
-.square:hover{
+.square:hover {
     opacity: 0.8;
+}
+
+.label-bottom {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(3, 120px);
+    width: 50%;
+}
+
+.box-score {
+    margin: 0 5px;
+    text-align: center;
+}
+
+.top-radius{
+    border-radius: 5px 5px 0 0;
+}
+
+.bottom-radius{
+    border-radius: 0 0 5px 5px;
+}
+
+.x-player>div {
+    color: black;
+    background-color: #31c4be;
+}
+
+.ties-box>div {
+    color: black;
+    background-color: #a8dfc8;
+}
+
+.o-player>div {
+    color: black;
+    background-color: #f2b237;
 }
