@@ -107,10 +107,13 @@ main {
 
 .top-radius{
     border-radius: 5px 5px 0 0;
+    font-weight: 500;
 }
 
 .bottom-radius{
     border-radius: 0 0 5px 5px;
+    font-weight: bold;
+    font-size: 1.3rem;
 }
 
 .x-player>div {
