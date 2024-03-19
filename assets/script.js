@@ -12,20 +12,6 @@ const game = {
     playerOPoints: 0,
     gameBoard: Array.from({ length: 3 }, () => Array(3).fill(" ")),
 
-    winningCombinations: [
-        //horizontal
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        //vertical
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        //diagonal
-        [0, 4, 8],
-        [2, 4, 6]
-    ],
-
     printBoard() {
         for (row of this.gameBoard) {
             const rowString = row.join(" | ");
@@ -47,10 +33,41 @@ const game = {
     },
 
     checkingWinner() {
+        let lines = [
+            this.gameBoard[0].join(''),
+            this.gameBoard[1].join(''),
+            this.gameBoard[2].join('')
+        ]
+        let columns = [
+            this.gameBoard.map(row => row[0]).join(''),
+            this.gameBoard.map(row => row[1]).join(''),
+            this.gameBoard.map(row => row[2]).join('')
+        ]
+        let diagonals = [
+            this.gameBoard[0][0] + this.gameBoard[1][1] + this.gameBoard[2][2],
+            this.gameBoard[0][2] + this.gameBoard[1][1] + this.gameBoard[2][0]
+        ]
 
-    },
-
-
+        if (lines.some(line => line == "XXX") ||
+            columns.some(line => line == "XXX") ||
+            diagonals.some(line => line == "XXX")) {
+            console.log("X won!");
+        } else if (lines.some(line => line == "OOO") ||
+            columns.some(line => line == "OOO") ||
+            diagonals.some(line => line == "OOO")) {
+            console.log("O won!");
+        }
+    }
 };
 
 game.playTurn()
+
+game.checkingWinner()
+
+game.playTurn()
+
+game.checkingWinner()
+
+game.playTurn()
+
+game.checkingWinner()
