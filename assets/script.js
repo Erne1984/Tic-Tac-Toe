@@ -1,7 +1,5 @@
 //const gameBoard = document.querySelectorAll(".square");
 
-
-
 function Player(name, Marker) {
     this.name = name;
     this.marker = marker;
@@ -19,15 +17,15 @@ const game = {
         };
     },
 
-    updateGameBoard() {
-
-    },
-
     playTurn() {
         let row = Number(prompt("Choose a row"));
         let column = Number(prompt("Choose a column"));
 
-        this.gameBoard[row - 1][column - 1] = "X";
+        if (this.gameBoard[row - 1][column - 1] === 'X' || this.gameBoard[row - 1][column - 1] === 'O') {
+            alert("Espaço já preenchido")
+        } else {
+            this.gameBoard[row - 1][column - 1] = "X";
+        }
 
         this.printBoard();
     },
@@ -57,6 +55,10 @@ const game = {
             diagonals.some(line => line == "OOO")) {
             console.log("O won!");
         }
+    },
+
+    roundPlayed(){
+        
     }
 };
 
