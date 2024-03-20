@@ -1,13 +1,17 @@
 //const gameBoard = document.querySelectorAll(".square");
 
-function Player(name, Marker) {
+function Player(name, marker, yourTurn, points, win) {
     this.name = name;
     this.marker = marker;
+    this.yourTurn = yourTurn;
+    this.points = points;
+    this.win = win
 }
 
-const game = {
-    playerXPoint: 0,
-    playerOPoints: 0,
+const ticTacToe = {
+    playerX: new Player("", "X", false, 0, false),
+    playerO: new Player("", "O", false, 0, false),
+    round: 0,
     gameBoard: Array.from({ length: 3 }, () => Array(3).fill(" ")),
 
     printBoard() {
@@ -18,14 +22,23 @@ const game = {
     },
 
     playTurn() {
-        let row = Number(prompt("Choose a row"));
-        let column = Number(prompt("Choose a column"));
+        const currentPlayer = this.playerX.yourTurn ? this.playerX : this.playerO;
+
+        let row = Number(prompt(`${currentPlayer.name}, choose a row`));
+        let column = Number(prompt(`${currentPlayer.name}, choose a column`));
 
         if (this.gameBoard[row - 1][column - 1] === 'X' || this.gameBoard[row - 1][column - 1] === 'O') {
-            alert("Espaço já preenchido")
-        } else {
-            this.gameBoard[row - 1][column - 1] = "X";
+            alert("Espaço já preenchido");
+            return;
         }
+
+        this.gameBoard[row - 1][column - 1] = currentPlayer.marker;
+
+        console.log(`Round ${this.round + 1}: ${currentPlayer.name} (${currentPlayer.marker})`);
+        this.round += 1;
+
+        this.playerX.yourTurn = !this.playerX.yourTurn;
+        this.playerO.yourTurn = !this.playerO.yourTurn;
 
         this.printBoard();
     },
@@ -49,27 +62,37 @@ const game = {
         if (lines.some(line => line == "XXX") ||
             columns.some(line => line == "XXX") ||
             diagonals.some(line => line == "XXX")) {
-            console.log("X won!");
+            this.playerX.win = true;
+            return true
         } else if (lines.some(line => line == "OOO") ||
             columns.some(line => line == "OOO") ||
             diagonals.some(line => line == "OOO")) {
-            console.log("O won!");
+            this.playerO.win = true;
+            return true
         }
     },
+    game() {
+        let playerXName = prompt("Choose a name for player X");
+        let playerOname = prompt("Choose a name for player O");
+        this.playerX.name = playerXName;
+        this.playerO.name = playerOname;
+        let anyoneWin = false;
 
-    roundPlayed(){
-        
+        while(!anyoneWin){
+            this.playTurn();
+            let check = this.checkingWinner();
+
+            if(check == true){
+                if(this.playerX.win == true){
+                    console.log(`${this.playerX.name} won!`);
+                    anyoneWin = true;
+                }else{
+                    console.log(`${this.playerO.name} won!`);
+                    anyoneWin = true;
+                }
+            }
+        }
     }
 };
 
-game.playTurn()
-
-game.checkingWinner()
-
-game.playTurn()
-
-game.checkingWinner()
-
-game.playTurn()
-
-game.checkingWinner()
+ticTacToe.game()
