@@ -22,10 +22,10 @@ const ticTacToe = {
     },
 
     playTurn() {
-        const currentPlayer = this.playerX.yourTurn ? this.playerX : this.playerO;
-
         let row = Number(prompt(`${currentPlayer.name}, choose a row`));
         let column = Number(prompt(`${currentPlayer.name}, choose a column`));
+        const currentPlayer = this.playerX.yourTurn ? this.playerX : this.playerO;
+;
 
         if (this.gameBoard[row - 1][column - 1] === 'X' || this.gameBoard[row - 1][column - 1] === 'O') {
             alert("Espaço já preenchido");
