@@ -1,13 +1,15 @@
 //const gameBoard = document.querySelectorAll(".square");
 
-function Player(name, Marker) {
+function Player(name, marker, yourTurn) {
     this.name = name;
     this.marker = marker;
+    this.yourTurn = yourTurn;
 }
 
 const game = {
     playerXPoint: 0,
     playerOPoints: 0,
+    round: 0,
     gameBoard: Array.from({ length: 3 }, () => Array(3).fill(" ")),
 
     printBoard() {
@@ -57,8 +59,19 @@ const game = {
         }
     },
 
-    roundPlayed(){
-        
+    roundPlayed() {
+        const playerX = new Player("Ernesto", "X", false);
+        const playerO = new Player("Jonas", "O", false);
+        while (!playerO.name && !playerX.yourTurn) {
+            const firstRound = prompt("Who is the first X or O?");
+
+            if(firstRound == "O") playerO.yourTurn = true;
+            if(firstRound == "X") playerX.yourTurn = true;
+            else{
+                console.log("Choose a valid Marker!")
+            }
+        }
+        return { playerX, playerO, firstRound };
     }
 };
 
