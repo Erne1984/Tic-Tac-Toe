@@ -7,8 +7,8 @@ function Player(name, marker, yourTurn) {
 }
 
 const game = {
-    playerXPoint: 0,
-    playerOPoints: 0,
+    playerX: new Player("Ernesto", "X", false),
+    playerO: new Player("Jonas", "O", false),
     round: 0,
     gameBoard: Array.from({ length: 3 }, () => Array(3).fill(" ")),
 
@@ -20,14 +20,23 @@ const game = {
     },
 
     playTurn() {
-        let row = Number(prompt("Choose a row"));
-        let column = Number(prompt("Choose a column"));
+        const currentPlayer = this.playerX.yourTurn ? this.playerX : this.playerO;
+
+        let row = Number(prompt(`${currentPlayer.name}, choose a row`));
+        let column = Number(prompt(`${currentPlayer.name}, choose a column`));
 
         if (this.gameBoard[row - 1][column - 1] === 'X' || this.gameBoard[row - 1][column - 1] === 'O') {
-            alert("Espaço já preenchido")
-        } else {
-            this.gameBoard[row - 1][column - 1] = "X";
+            alert("Espaço já preenchido");
+            return; 
         }
+
+        this.gameBoard[row - 1][column - 1] = currentPlayer.marker;
+
+        console.log(`Round ${this.round + 1}: ${currentPlayer.name} (${currentPlayer.marker})`);
+        this.round += 1;
+
+        this.playerX.yourTurn = !this.playerX.yourTurn;
+        this.playerO.yourTurn = !this.playerO.yourTurn;
 
         this.printBoard();
     },
@@ -57,21 +66,6 @@ const game = {
             diagonals.some(line => line == "OOO")) {
             console.log("O won!");
         }
-    },
-
-    roundPlayed() {
-        const playerX = new Player("Ernesto", "X", false);
-        const playerO = new Player("Jonas", "O", false);
-        while (!playerO.name && !playerX.yourTurn) {
-            const firstRound = prompt("Who is the first X or O?");
-
-            if(firstRound == "O") playerO.yourTurn = true;
-            if(firstRound == "X") playerX.yourTurn = true;
-            else{
-                console.log("Choose a valid Marker!")
-            }
-        }
-        return { playerX, playerO, firstRound };
     }
 };
 
