@@ -22,10 +22,11 @@ const ticTacToe = {
     },
 
     playTurn() {
+        const currentPlayer = this.playerX.yourTurn ? this.playerX : this.playerO;
         let row = Number(prompt(`${currentPlayer.name}, choose a row`));
         let column = Number(prompt(`${currentPlayer.name}, choose a column`));
-        const currentPlayer = this.playerX.yourTurn ? this.playerX : this.playerO;
-;
+
+
 
         if (this.gameBoard[row - 1][column - 1] === 'X' || this.gameBoard[row - 1][column - 1] === 'O') {
             alert("Espaço já preenchido");
@@ -63,36 +64,63 @@ const ticTacToe = {
             columns.some(line => line == "XXX") ||
             diagonals.some(line => line == "XXX")) {
             this.playerX.win = true;
+            this.playerX.points += 1;
             return true
         } else if (lines.some(line => line == "OOO") ||
             columns.some(line => line == "OOO") ||
             diagonals.some(line => line == "OOO")) {
             this.playerO.win = true;
+            this.playerO.points += 1;
             return true
         }
     },
+
+    retry() {
+        let answer = prompt("Want to play again? s/n");
+        let validAnswer = false;
+        while (!validAnswer) {
+            if (answer.toLowerCase() === "s" || answer.toLowerCase() === "n") {
+                this.playerO.win = false;
+                this.playerX.win = false;
+                this.gameBoard = Array.from({ length: 3 }, () => Array(3).fill(" "));
+                this.round = 0;
+                validAnswer = true;
+                if (answer.toLowerCase() == "s") {
+                    this.game();
+                }
+            } else {
+                console.log("Choose a valid answer!");
+                answer = prompt("Want to play again? s/n");
+            }
+        }
+    },
+
     game() {
-        let playerXName = prompt("Choose a name for player X");
-        let playerOname = prompt("Choose a name for player O");
-        this.playerX.name = playerXName;
-        this.playerO.name = playerOname;
+        if (this.playerO.points == 0 && this.playerX.points == 0) {
+            let playerXName = prompt("Choose a name for player X");
+            let playerOname = prompt("Choose a name for player O");
+            this.playerX.name = playerXName;
+            this.playerO.name = playerOname;
+        }
         let anyoneWin = false;
 
-        while(!anyoneWin){
+        while (!anyoneWin) {
             this.playTurn();
             let check = this.checkingWinner();
 
-            if(check == true){
-                if(this.playerX.win == true){
+            if (check == true) {
+                if (this.playerX.win == true) {
                     console.log(`${this.playerX.name} won!`);
                     anyoneWin = true;
-                }else{
+                    this.retry()
+                } else {
                     console.log(`${this.playerO.name} won!`);
                     anyoneWin = true;
+                    this.retry()
                 }
             }
         }
     }
-};
+}
 
 ticTacToe.game()
