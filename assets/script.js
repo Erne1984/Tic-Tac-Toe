@@ -1,4 +1,4 @@
-//const gameBoard = document.querySelectorAll(".square");
+const gameBoard = document.querySelectorAll(".square");
 
 function Player(name, marker, yourTurn, points, win) {
     this.name = name;
@@ -42,6 +42,19 @@ const ticTacToe = {
         this.playerO.yourTurn = !this.playerO.yourTurn;
 
         this.printBoard();
+    },
+
+    checkingDraw() {
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (this.gameBoard[i][j] === ' ') {
+                    return false;
+                }
+            }
+        }
+        console.log("It's a draw!");
+        this.retry();
+        return true;
     },
 
     checkingWinner() {
@@ -106,9 +119,12 @@ const ticTacToe = {
 
         while (!anyoneWin) {
             this.playTurn();
-            let check = this.checkingWinner();
+            let checkDraw = this.checkingDraw();
+            let checkWin = this.checkingWinner();
 
-            if (check == true) {
+            if(checkDraw) break;
+
+            if (checkWin == true) {
                 if (this.playerX.win == true) {
                     console.log(`${this.playerX.name} won!`);
                     anyoneWin = true;
@@ -123,4 +139,4 @@ const ticTacToe = {
     }
 }
 
-ticTacToe.game()
+console.log(gameBoard)
