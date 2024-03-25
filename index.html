@@ -28,11 +28,11 @@
             </div>
 
             <div class="turn">
-                <div class="x-icon">X</div>
+                <div id="turn" class="x-icon">X</div>
                 <div>TURN</div>
             </div>
 
-            <div class="btn-retry">
+            <div id="retry" class="btn-retry">
                 <img src="assets/icon/refresh-svgrepo-com.svg">
             </div>
 
@@ -40,7 +40,8 @@
 
         <section class="board">
 
-            <div class="square"></div>
+            <div class="square">
+            </div>
             <div class="square"></div>
             <div class="square"></div>
             <div class="square"></div>
@@ -58,17 +59,17 @@
 
             <div class="box-score x-player">
                 <div class="top-radius">X Player</div>
-                <div class="bottom-radius">0</div>
+                <div class="bottom-radius" id="x-points">0</div>
             </div>
 
             <div class="box-score ties-box">
                 <div class="top-radius">Ties</div>
-                <div class="bottom-radius">0</div>
+                <div class="bottom-radius" id="ties-count">0</div>
             </div>
 
             <div class="box-score o-player">
                 <div class="top-radius">O Player</div>
-                <div class="bottom-radius">0</div>
+                <div class="bottom-radius" id="o-points">0</div>
             </div>
 
         </div>

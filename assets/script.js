@@ -1,5 +1,3 @@
-const gameBoard = document.querySelectorAll(".square");
-
 function Player(name, marker, yourTurn, points, win) {
     this.name = name;
     this.marker = marker;
@@ -122,7 +120,7 @@ const ticTacToe = {
             let checkDraw = this.checkingDraw();
             let checkWin = this.checkingWinner();
 
-            if(checkDraw) break;
+            if (checkDraw) break;
 
             if (checkWin == true) {
                 if (this.playerX.win == true) {
@@ -139,4 +137,35 @@ const ticTacToe = {
     }
 }
 
-console.log(gameBoard)
+const interface = {
+    playerX: new Player("", "X", true, 0, false),
+    playerO: new Player("", "O", false, 0, false),
+
+    gameBoard: document.querySelectorAll(".square"),
+    playerXPoints: document.querySelector("#x-points"),
+    playerOPoints: document.querySelector("#o-points"),
+    tiesPoints: document.querySelector("#ties-count"),
+    turn: document.querySelector("#turn"),
+    retryBtn: document.querySelector("#retry"),
+
+    playTurn() {
+        const currentPlayer = this.playerX.yourTurn ? this.playerX : this.playerO;
+        this.turn.textContent = currentPlayer.marker;
+
+        this.gameBoard.forEach((square) => {
+            square.addEventListener(("click"), () => {
+                square.textContent = currentPlayer.marker;
+            })
+        })
+
+        
+    },
+
+    game() {
+        this.playTurn();
+    }
+}
+ 
+
+
+interface.game();
