@@ -6,6 +6,7 @@ function Player(name, marker, yourTurn, points, win) {
     this.win = win
 }
 
+// Jogo no console
 const ticTacToe = {
     playerX: new Player("", "X", false, 0, false),
     playerO: new Player("", "O", false, 0, false),
@@ -137,35 +138,139 @@ const ticTacToe = {
     }
 }
 
+// Jogo na UI
 const interface = {
     playerX: new Player("", "X", true, 0, false),
     playerO: new Player("", "O", false, 0, false),
+    ties: 0,
 
     gameBoard: document.querySelectorAll(".square"),
     playerXPoints: document.querySelector("#x-points"),
     playerOPoints: document.querySelector("#o-points"),
     tiesPoints: document.querySelector("#ties-count"),
-    turn: document.querySelector("#turn"),
+    turnX: document.querySelector("#turn-x"),
+    turnO: document.querySelector("#turn-o"),
     retryBtn: document.querySelector("#retry"),
 
     playTurn() {
-        const currentPlayer = this.playerX.yourTurn ? this.playerX : this.playerO;
-        this.turn.textContent = currentPlayer.marker;
-
         this.gameBoard.forEach((square) => {
             square.addEventListener(("click"), () => {
-                square.textContent = currentPlayer.marker;
+
+                const currentPlayer = this.playerX.yourTurn ? this.playerX : this.playerO;
+
+                if (square.textContent == "") {
+                    this.manageTurn(currentPlayer);
+                    if (currentPlayer.marker == "X") {
+                        square.classList.toggle('x-icon-board');
+                        square.textContent = currentPlayer.marker;
+                    } else {
+                        square.classList.toggle('o-icon-board');
+                        square.textContent = currentPlayer.marker;
+                    }
+
+                }
+                if (this.checkingWinner()) {
+                    this.resetBoard();
+                }
+                this.draw();
+
+                this.playerX.yourTurn = !this.playerX.yourTurn;
+                this.playerO.yourTurn = !this.playerO.yourTurn;
             })
         })
 
-        
+
+    },
+
+    manageTurn(currentPlayer) {
+        if (currentPlayer.marker === "X") {
+            this.turnX.classList.toggle("none");
+            this.turnO.classList.toggle("none");
+        } else if (currentPlayer.marker === "O") {
+            this.turnX.classList.toggle("none");
+            this.turnO.classList.toggle("none");
+        }
+    },
+
+    checkingWinner() {
+        const winningCombos = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Linhas
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Colunas
+            [0, 4, 8], [2, 4, 6] // Diagonais
+        ];
+
+        for (const combo of winningCombos) {
+            const [a, b, c] = combo;
+            const squares = this.gameBoard;
+
+            if (
+                squares[a].textContent &&
+                squares[a].textContent === squares[b].textContent &&
+                squares[a].textContent === squares[c].textContent
+            ) {
+                if (squares[a].textContent === 'X') {
+                    this.playerX.points++;
+                    this.playerXPoints.textContent = this.playerX.points;
+                } else {
+                    this.playerO.points++;
+                    this.playerOPoints.textContent = this.playerO.points;
+                }
+                return true;
+            }
+        }
+
+        return false;
+    },
+
+    resetBoard() {
+        const squares = this.gameBoard;
+
+        for (square of squares) {
+            square.textContent = "";
+
+            square.classList.remove("none");
+            square.classList.remove('x-icon-board');
+            square.classList.remove('o-icon-board');
+        }
+
+    },
+
+    resetGame() {
+        this.retryBtn.addEventListener("click", () => {
+            this.resetBoard();
+            this.ties = 0;
+            this.playerX.points = 0;
+            this.playerO.points = 0;
+
+            this.playerXPoints.textContent = this.playerX.points;
+            this.playerOPoints.textContent = this.playerO.points;
+            this.tiesPoints.textContent = this.ties;
+        })
+    },
+
+    draw() {
+        const squares = this.gameBoard;
+        let isBoardFull = true;
+        for (const square of squares) {
+            if (square.textContent === "") {
+                isBoardFull = false;
+                break;
+            }
+        }
+
+        if (isBoardFull && !this.checkingWinner()) {
+            this.resetBoard();
+            this.ties++;
+            this.tiesPoints.textContent = this.ties;
+        }
     },
 
     game() {
         this.playTurn();
+        this.resetGame();
     }
 }
- 
+
 
 
 interface.game();
